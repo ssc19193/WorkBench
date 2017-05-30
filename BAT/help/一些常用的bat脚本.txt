@@ -1,0 +1,117 @@
+﻿---------- 把同一文件拷贝到所有子目录中.BAT
+@echo off
+for /r . %%a in (.) do copy 文件名 %%a
+
+---------- 遍历可用ip地址,小心被网管k死.BAT
+@set YAHOO=66.218.71.90
+@set IP=200
+@set TIMEOUT=500
+
+:Loop
+@netsh interface ip set address name="本地连接" source=static addr=192.168.0.%ip% mask=255.255.255.0 192.168.0.1 1
+@echo.
+@echo Checking 192.168.0.%IP%
+@ping -n 1 -w %TIMEOUT% %YAHOO% | find "Reply"
+@set /a ip=%ip%+1
+@if %ip% EQU 255 goto :End
+@goto :Loop
+
+:End
+
+---------- WINRAR嵌套解压缩.BAT
+@echo off
+for /l %i in (1,1,3) do rar x -r -o- .
+
+---------- WINXP怎样通过脚本实现从文本中截取字符串再作为命令的参数运行.TXT
+route print 163.200.0.0 >1.txt
+for /f "skip=8 tokens=3" %i in (1.txt) do route add 162.200.0.0 mask 255.255.0.0 %i && exit
+
+WinXP的机器。
+我希望从命令如"route print 163.200.0.0"的输出结果中截取出网关IP地址，再将另一网段的路由指向该网关，如“route add 162.200.0.0 <网关IP>”，在UNIX下可以作到，不知能否通过Win的批处理命令或其它脚本实现？
+我对Win下的脚本无任何使用经验，请帮忙！谢谢！
+
+订正：
+for /f "skip=8 tokens=3" %i in ('route print 163.200.0.0') do route add 162.200.0.0 mask 255.255.0.0 %i && exit
+
+
+---------- 遍历盘取文件路径.BAT
+@echo off
+for /r %%I in (*.*) do echo %%~fnI >> c:\列表.txt
+
+---------- 遍历盘取文件路径1.BAT
+@echo off
+dir /a:d /s /a /b >c:\list.txt
+
+---------- 检看局域网内网卡的MAC.BAT
+@echo off
+for /l %%a in (1,1,254) do ping -n 1 -w 10 192.168.0.%%a 
+arp -a
+
+---------- 建立当前日期目录.BAT
+set today=%date:~4,10%
+md "today"
+
+---------- 将某个盘里的所有EXE覆盖到另一个盘的相应目录.BAT
+xcopy *.exe 目标路径\. /s/e/y
+
+---------- 复制目录结构，而不复制目录下的文件.BAT
+xcopy /t/e
+
+---------- 每个文件生成一个同名文件夹，然后把各个文件拷贝到同名文件夹中.BAT
+@echo off
+for %%a in (*.*) do mkdir "%%~na"
+for %%a in (*.*) do copy %%a "%%~na"
+
+---------- 扫描一个网段.用FOR和PING.然后得到存活主机把结果存为IP和IP之间用,隔开.BAT
+for /l %%i in (1,1,254) do ping -n 1 192.168.0.%%i | find "Reply" >>1.txt
+for /f "tokens=3" %%i in (1.txt) do echo %%i >>2.txt
+for /f "tokens=1 delims=:" %%i in (2.txt) do echo %%i, >>3.txt
+del 1.txt 2.txt && cls && type 3.txt && pause
+
+订正：
+for /l %i in (1,1,254) do @echo connecting 192.168.1.%i && @(for /f "tokens=1,3 skip=2 delims=: " %j in ('ping 192.168.1.%i') do @if '%j'=='Reply' @find "192.168.1.%i" list.txt > nul 2>nul || @echo %k>>list.txt && @echo 192.168.1.%i connected)
+
+---------- 删除指定大小文件，拷贝，移动，改名.BAT
+@echo off
+for /r %%a in (*.jpg,*.jpeg,*.png) do if %%~za lss 50000 del /q "%%a"
+
+---------- 删除指定扩展类型文件,拷贝，移动，改名.BAT
+@echo off
+for /r %%a in (*.htm,*.html,*.gif,*.js,*.bmp) do del /q "%%a"
+
+---------- 删除指定扩展类型文件.BAT
+del /s/f/q *.exe
+
+---------- 生成001.TXT 002.TXT 999.TXT 文本内容分别是TEXT001 TEXT002.BAT
+@echo off
+for /l %%a in (1,1,9) do @echo text00%%a >00%%a.txt
+for /l %%a in (10,1,99) do @echo text0%%a >0%%a.txt
+for /l %%a in (100,1,999) do @echo text%%a >%%a.txt
+
+---------- 刷新网卡.BAT
+@echo off
+nbtstat -RR
+ipconfig /flushdns
+ipconfig /renew
+ipconfig /release
+
+---------- 死循环.BAT
+@echo off
+for /l %%a in (1,0,2) do dir %%a
+
+---------- 向目录里的每个文件夹里面都COPY一份相同的文件.BAT
+for /r %a in (.) do xcopy /y c:\1.txt "%~pa"
+
+---------- 一张图片一次复制几十张.BAT
+@echo off
+for /l %a in (1, 1, 10) do copy "a.jpg" "a%a.jpg"
+
+---------- 自动为备份的目标文件命不同的名称.BAT
+echo f | xcopy x.x 目标路径\"%date%-x".x 
+
+想要做到即使目标文件与源文件相同,也要备份一份,应怎样做?例如,今天的目标文件为2004-02-07-00001.ZIP,明天的目标文件为2004-02-08-00001.ZIP以此类推.可以留几十个备份且文件名会自动更正,有没有办法?
+
+---------- 列表文本文件文件名+文件内容.BAT
+find /v "" *.* >1.txt 
+ 
+path c:\mysql\bin;c:\progra~1\winrardel /q/f d:\bakup\*.*@echo off mysql  -uroot -ppassword   dbname < sql_out_cmd.sql @echo onfor /F "tokens=1,10" %%i in ('date /T') do rar a -m1 -r -o+ d:\bakdir_rar\%%i.rar d:\bakup\*.*
