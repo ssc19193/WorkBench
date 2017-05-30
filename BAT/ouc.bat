@@ -1,4 +1,4 @@
-:: ÒÀ´ÎÎª¿í´øÁ¬½ÓÃû£¨Ä¬ÈÏ¡°¿í´øÁ¬½Ó¡±£©£¬ÓÃ»§Ãû£¬ÃÜÂë
+ï»¿:: ä¾æ¬¡ä¸ºå®½å¸¦è¿æ¥åï¼ˆé»˜è®¤â€œå®½å¸¦è¿æ¥â€ï¼‰ï¼Œç”¨æˆ·åï¼Œå¯†ç 
 @set "connectName=ouc"
 @set "userId=14020023034"
 @set "password=14020023034"
@@ -9,21 +9,21 @@ Setlocal enabledelayedexpansion
 ipconfig /flushdns
 rasdial %connectName% /disconnect 
 set /a t=10
-echo Ã¿´Î³¢ÊÔ10´ÎÁ¬½Ó
+echo æ¯æ¬¡å°è¯•10æ¬¡è¿æ¥
 :cir
-echo ÕıÔÚ³¢ÊÔµÚ%t%´Î
+echo æ­£åœ¨å°è¯•ç¬¬%t%æ¬¡
 rasdial %connectName% %userId% %password%
-::0 ±íÊ¾Á¬½Ó³É¹¦»òÒÑÁ¬½Ó, ·ñÔò±íÊ¾Á¬½ÓÊ§°Ü
+::0 è¡¨ç¤ºè¿æ¥æˆåŠŸæˆ–å·²è¿æ¥, å¦åˆ™è¡¨ç¤ºè¿æ¥å¤±è´¥
 IF /I "%errorlevel%" EQU "0" ( goto end)
 set /a t=t-1
 if "%t%" neq "0" goto cir
-CHOICE /C yn /T 10 /D n /M "(10sÑ¡ÔñÊ±¼ä)ÊÇ·ñÔÙ´Îµ÷ÓÃ?"
+CHOICE /C yn /T 10 /D n /M "(10sé€‰æ‹©æ—¶é—´)æ˜¯å¦å†æ¬¡è°ƒç”¨?"
 if /i "%errorlevel%" equ "1" (  call ouc.bat)
-CHOICE /T 2 /D n /M "---------Á¬½ÓÊ§°Ü--------2sºóÍË³ö"
+CHOICE /T 2 /D n /M "---------è¿æ¥å¤±è´¥--------2såé€€å‡º"
 ::pause
 exit
 :end
 start "" "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe"
-CHOICE /T 3 /D n /M "---------Á¬½Ó--³É¹¦--------3sºóÍË³ö"
+CHOICE /T 3 /D n /M "---------è¿æ¥--æˆåŠŸ--------3såé€€å‡º"
 ::pause
 exit
