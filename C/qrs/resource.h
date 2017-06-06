@@ -19,7 +19,7 @@
 #define ID_START                        1004
 #define ID_CLOSE                        1005
 #define ID_PAUSE                        1006
-#define IDC_STATIC_u                    1008
+#define ID_PAUSE2                       1007
 
 // Next default values for new objects
 // 

@@ -55,12 +55,12 @@ BOOL CQrsApp::InitInstance()
 	Enable3dControlsStatic();	// Call this when linking to MFC statically
 #endif
 
-//	CQrsDlg dlg;
-//	m_pMainWnd = &dlg;
-//	int nResponse = dlg.DoModal();
+	CQrsDlg dlg;
+	m_pMainWnd = &dlg;
+	int nResponse = dlg.DoModal();
 
-	SscPinao s;
-	int nResponse = s.DoModal();
+//	SscPinao s;
+//	int nResponse = s.DoModal();
 
 	if (nResponse == IDOK)
 	{

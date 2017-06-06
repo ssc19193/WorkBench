@@ -13,6 +13,8 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 int ind[6][4];
+int marks;
+int threadStatue=0;
 
 /////////////////////////////////////////////////////////////////////////////
 // SscPinao dialog
@@ -84,7 +86,7 @@ if (pMsg->message == WM_KEYDOWN)
 				pThead->SuspendThread();
 				//::PostThreadMessage(pThead->m_nThreadID,0,0,0);
 				return true;
-			case 74:
+			case 74: // j
 				if( pThead !=0){
 					::PostThreadMessage(pThead->m_nThreadID,0,0,0);
 					pThead = 0;
@@ -134,20 +136,31 @@ UINT ThreadFunc( LPVOID lpParam)
 
 	unsigned long delay =(inf)->nMSec+0;
 	int i, j;
-	delay = 1000+0;
+	delay = 100;
 	int cir=10;
+
+	threadStatue = 1;
+
+	for( i=0; i<6; i++){
+		for( j=0; j<4; j++){
+			ind[i][j]=-1;
+		}
+	}
 	while( 1){
 		MSG msg;
 		while(PeekMessage(&msg,NULL,0,0,PM_REMOVE)){      //将消息队列里的消息逐个读入msg
 //				cprintf("1--%d\n", msg.message);
 			if( msg.message==0){     //如果收到终止消息则退出
+				threadStatue = 0;
 				return 0;      //线程正常返回，会释放局部变量等内存资源
 			}else{
 				cprintf("--%d\n", msg.message);
 				if( ind[1][msg.message-2] >= 0){
 					ind[1][msg.message-2] = -1;
+					marks++;
 				}else{
 					AfxMessageBox("PRESS ERROR AREA!\nGAME OVER!");
+					threadStatue = 0;
 					return 0;
 				}
 			}
@@ -178,6 +191,7 @@ UINT ThreadFunc( LPVOID lpParam)
 			// 判断遗漏
 			if( ind[0][0] >=0 || ind[0][1] >=0 || ind[0][2] >=0 || ind[0][3] >=0 ){
 				AfxMessageBox( "YOU MISS ONE!\nGAME OVER!");
+				threadStatue = 0;
 				return 1;
 			}
 			for( i=5; i>=0; i--)
@@ -186,7 +200,7 @@ UINT ThreadFunc( LPVOID lpParam)
 //		cprintf("%x", inf->sp);
 
 		inf->sp->flush();
-		Sleep( 100);
+		Sleep( delay-marks);
 		if( delay <=0 ){
 			return 0;
 		}
@@ -207,6 +221,7 @@ void SscPinao::OnStart()
 	info.nMSec = 1000;
 	info.sp = this;
 	pThead = AfxBeginThread( ThreadFunc, &info);
+	marks=0;
 }
 
 BOOL SscPinao::OnInitDialog() 
@@ -220,8 +235,12 @@ BOOL SscPinao::OnInitDialog()
 
 void SscPinao::OnPause() 
 {
-	ind[5][1]+=10;
-	flush();
+	if( pThead == 0)
+		return;
+	pThead->SuspendThread();
+	AfxMessageBox("游戏已暂停\n点击确定继续游戏.");
+	Sleep(500);
+	pThead->ResumeThread();
 }
 
 void SscPinao::OnPaint() 
@@ -234,7 +253,8 @@ void SscPinao::OnPaint()
 	CRect c(7, 7, 407, 407);
 	int i, j;
 	static x = 1;
-	
+	CString cs;
+	cs.Format("%d",marks);
 
 	nbw.CreateSolidBrush( RGB(255,255,255));
 	nbb.CreateSolidBrush( RGB(0,0,0));
@@ -251,6 +271,7 @@ void SscPinao::OnPaint()
 	dc.MoveTo( 307, 7);
 	dc.LineTo( 307, 407);
 
+	//dc.TextOut(7+200, 7+100, _T("hello"));
 
 	for( j=0; j<4; j++){
 		if( ind[5][j] >= 0){
@@ -288,6 +309,18 @@ void SscPinao::OnPaint()
 	nbb.DeleteObject();
 	nbw.DeleteObject();
 	nbr.DeleteObject();
+
+	
+	dc.SetBkMode(TRANSPARENT);
+	CFont fontGrade;
+	dc.SetTextColor(RGB(0,255,0));
+	fontGrade.CreatePointFont(500, _T("宋体"));
+	dc.SelectObject(&fontGrade);
+	if( marks>9){
+		dc.DrawText(_T(cs),  &CRect(177,57,277,117), DT_EDITCONTROL|DT_WORDBREAK|DT_LEFT|DT_NOPREFIX);
+	}else{
+		dc.DrawText(_T(cs),  &CRect(190,57,277,117), DT_EDITCONTROL|DT_WORDBREAK|DT_LEFT|DT_NOPREFIX);
+	}
 
 
     CDialog::OnPaint();
