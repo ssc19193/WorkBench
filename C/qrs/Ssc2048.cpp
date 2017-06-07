@@ -20,6 +20,26 @@ int ins[4][4];
 int change=0;
 int unzero = 0;
 
+	CBrush cbbg;
+	CBrush cb0;
+	CBrush cb2;
+	CBrush cb4;
+	CBrush cb8;
+	CBrush cb16;
+	CBrush cb32;
+	CBrush cb64;
+	CBrush cb128;
+	CBrush cb256;
+	CBrush cb512;
+	CBrush cb1024;
+	CBrush cb2048;
+	CBrush cb4096;
+	CBrush *cb;
+
+	CFont fontGrade;
+	CString cs;
+
+
 Ssc2048::Ssc2048(CWnd* pParent /*=NULL*/)
 	: CDialog(Ssc2048::IDD, pParent)
 {
@@ -31,11 +51,30 @@ Ssc2048::Ssc2048(CWnd* pParent /*=NULL*/)
 			ins[i][j]=0;
 		}
 	}
-	ins[0][0]=2;
+/*	ins[0][0]=2;
 	ins[1][1]=2;
 	ins[2][2]=2;
 	ins[3][3]=2;
-	AllocConsole();
+*/	AllocConsole();
+	Restart2048();
+
+	cbbg.CreateSolidBrush( RGB(187,173,160));
+	cb0.CreateSolidBrush( RGB(204,192,178));
+	cb2.CreateSolidBrush( RGB(238,228,218));
+	cb4.CreateSolidBrush( RGB(236,224,200));
+	cb8.CreateSolidBrush( RGB(242,177,121));
+	cb16.CreateSolidBrush( RGB(245,149,101));
+	cb32.CreateSolidBrush( RGB(245,124,95));
+	cb64.CreateSolidBrush( RGB(245,95,58));
+	cb128.CreateSolidBrush( RGB(238,207,114));
+	cb256.CreateSolidBrush( RGB(236,204,95));
+	cb512.CreateSolidBrush( RGB(226,193,40));
+	cb1024.CreateSolidBrush( RGB(237,204,97));
+	cb2048.CreateSolidBrush( RGB(237,194,46));
+	cb4096.CreateSolidBrush( RGB(37,187,98));
+
+	fontGrade.CreatePointFont(250, _T("GungsuhChe"));
+
 }
 
 
@@ -52,6 +91,7 @@ BEGIN_MESSAGE_MAP(Ssc2048, CDialog)
 	//{{AFX_MSG_MAP(Ssc2048)
 	ON_WM_PAINT()
 	ON_BN_CLICKED(ID_2048_RESTART, On2048Restart)
+	ON_WM_CLOSE()
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -62,19 +102,17 @@ void Ssc2048::OnPaint()
 {
 	CPaintDC dc(this); // device context for painting
 
+	POINT p;
+	p.x = 5;
+	p.y = 5;
 	
-	CBrush cbbg;
-	CBrush cb2;
-	CBrush cb4;
-	CBrush cb8;
-	CBrush *cb;
 	CRect c(7, 7, 407, 407);
+	CRgn cr;
 	int i, j;
 
 
-	cbbg.CreateSolidBrush( RGB(255,255,255));
 	dc.FillRect( c, &cbbg);
-
+/*
 	for( i=0; i< 6; i++){
 		dc.MoveTo( 7, 7+100*i);
 		dc.LineTo( 407, 7+100*i);
@@ -83,51 +121,55 @@ void Ssc2048::OnPaint()
 		dc.MoveTo( 100*j+7, 7);
 		dc.LineTo( 100*j+7, 407);
 	}
-
+*/
 	dc.SetBkMode(TRANSPARENT);
-	CFont fontGrade;
 	dc.SetTextColor(RGB(0,0,0));
-	fontGrade.CreatePointFont(500, _T("ËÎÌו"));
 	dc.SelectObject(&fontGrade);
-	CString cs;
 
 	
-	cb2.CreateSolidBrush( RGB(255,0,0));
-	cb4.CreateSolidBrush( RGB(0,255,0));
-	cb8.CreateSolidBrush( RGB(0,0,255));
 	for( i=0; i<4; i++){
 		for( j=0; j<4; j++){
-			c.left = 8+100*j;
-			c.right = c.left+100-1;
-			c.top = 8+100*i;
-			c.bottom = c.top+100-1;
-
-			if( ins[i][j] ==0) continue;
+				cr.CreateRoundRectRgn( 
+					8+100*j+5,
+					8+100*i+5,
+					8+100*j+5+100-1-10,
+					8+100*i+5+100-1-10,
+					5, 5);
+			c.left = 8+100*j+5;
+			c.right = c.left+100-1-10;
+			c.top = 8+100*i+5;
+			c.bottom = c.top+100-1-10;
 
 			switch( ins[i][j]){
-			case 2:
-				cb = &cb2;
-					break;
-			case 4:
-				cb = &cb4;
-					break;
-			case 8:
-				cb = &cb8;
-				break;
-			default:
-				cb = &cb8;
+			case 0:	cb = &cb0;	break;
+			case 2:	cb = &cb2;	break;
+			case 4:	cb = &cb4;	break;
+			case 8:	cb = &cb8;	break;
+			case 16:	cb = &cb16;	break;
+			case 32:	cb = &cb32;	break;
+			case 64:	cb = &cb64;	break;
+			case 128:	cb = &cb128;	break;
+			case 256:	cb = &cb256;	break;
+			case 512:	cb = &cb512;	break;
+			case 1024:	cb = &cb1024;	break;
+			case 2048:	cb = &cb2048;	break;
+			case 4096:	cb = &cb4096;	break;
 			}
-			dc.FillRect( c, cb);
+//			dc.FillRect( c, cb);
+			dc.FillRgn( &cr, cb);
+			cr.DeleteObject();
 
-
+			if( ins[i][j] == 0) continue;
+			if( ins[i][j] < 8){
+				dc.SetTextColor(RGB(119,110,93));
+			}else{
+				dc.SetTextColor( RGB(255,255,255));
+			}
 			cs.Format("%2d", ins[i][j]);
 			dc.DrawText(_T(cs),  &c, DT_EDITCONTROL|DT_WORDBREAK|DT_LEFT|DT_NOPREFIX);
 
 		}
 	}
-
-	cbbg.DeleteObject();
-	cb2.DeleteObject();
 }
 
 BOOL Ssc2048::PreTranslateMessage(MSG* pMsg) 
@@ -160,7 +202,6 @@ BOOL Ssc2048::PreTranslateMessage(MSG* pMsg)
 				break;;
         }
 		make2();
-	 	Invalidate();
     } 
 	return CDialog::PreTranslateMessage(pMsg);
 }
@@ -355,6 +396,8 @@ void Ssc2048::make2()
 		break;
 	}
 
+	Invalidate();
+
 	if( !isAlive()){
 		AfxMessageBox("Game Over!");
 		return;
@@ -399,6 +442,12 @@ int Ssc2048::isAlive()
 
 void Ssc2048::On2048Restart() 
 {
+	Restart2048();
+ 	Invalidate();
+}
+
+void Ssc2048::Restart2048()
+{
 	int i, j;
 	for( i=0; i<4; i++){
 		for( j=0; j<4; j++){
@@ -413,5 +462,27 @@ void Ssc2048::On2048Restart()
 		ins[j/4][j%4] = 2;
 		i--;
 	}
- 	Invalidate();
+}
+
+void Ssc2048::OnClose() 
+{
+
+	cbbg.DeleteObject();
+	cb0.DeleteObject();
+	cb2.DeleteObject();
+	cb4.DeleteObject();
+	cb8.DeleteObject();
+	cb16.DeleteObject();
+	cb32.DeleteObject();
+	cb64.DeleteObject();
+	cb128.DeleteObject();
+	cb256.DeleteObject();
+	cb512.DeleteObject();
+	cb1024.DeleteObject();
+	cb2048.DeleteObject();
+	cb4096.DeleteObject();
+	cb = 0;
+	fontGrade.DeleteObject();
+
+	CDialog::OnClose();
 }

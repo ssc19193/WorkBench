@@ -15,9 +15,9 @@ Class3=SscPic
 Class4=SscPinao
 
 ResourceCount=4
-Resource1=IDD_DIALOG_SHOWPIC
-Resource2=IDD_DIALOG_PINAO
-Resource3=IDD_QRS_MAIN
+Resource1=IDD_DIALOG_PINAO
+Resource2=IDD_QRS_MAIN
+Resource3=IDD_DIALOG_SHOWPIC
 Class5=Ssc2048
 Resource4=IDD_DIALOG_2048
 

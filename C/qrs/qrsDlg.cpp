@@ -6,6 +6,7 @@
 #include "qrsDlg.h"
 #include "SscPic.h"
 #include "SscPinao.h"
+#include "Ssc2048.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -125,5 +126,6 @@ void CQrsDlg::OnButtonPinao()
 
 void CQrsDlg::On2048()
 {
-
+	Ssc2048 s;
+	s.DoModal();
 }

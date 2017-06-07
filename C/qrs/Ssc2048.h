@@ -43,9 +43,11 @@ protected:
 	//{{AFX_MSG(Ssc2048)
 	afx_msg void OnPaint();
 	afx_msg void On2048Restart();
+	afx_msg void OnClose();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 private:
+	void Restart2048();
 	int isAlive();
 	void make2();
 	void doLeft();

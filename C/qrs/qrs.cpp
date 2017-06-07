@@ -56,6 +56,8 @@ BOOL CQrsApp::InitInstance()
 	Enable3dControlsStatic();	// Call this when linking to MFC statically
 #endif
 
+	// 只能选择其中一项
+
 	CQrsDlg dlg;
 	m_pMainWnd = &dlg;
 	int nResponse = dlg.DoModal();
