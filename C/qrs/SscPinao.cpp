@@ -27,7 +27,8 @@ SscPinao::SscPinao(CWnd* pParent /*=NULL*/)
 	//}}AFX_DATA_INIT
 
 	
-	AllocConsole();
+//	AllocConsole();
+
 	pThead = 0;
 	for( int i=0; i<5; i++){
 		for( int j=0; j<4; j++){

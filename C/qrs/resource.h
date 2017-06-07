@@ -23,7 +23,9 @@
 #define ID_PINAO_PAUSE                  1006
 #define ID_PINAO_HELP                   1007
 #define IDC_2048                        1017
+#define IDC_AUTHOR                      1018
 #define ID_2048_RESTART                 1019
+#define ID_2048_HELP                    1020
 
 // Next default values for new objects
 // 

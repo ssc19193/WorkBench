@@ -7,6 +7,7 @@
 #include "SscPic.h"
 #include "SscPinao.h"
 #include "Ssc2048.h"
+#include "conio.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -43,6 +44,7 @@ BEGIN_MESSAGE_MAP(CQrsDlg, CDialog)
 	ON_BN_CLICKED(IDC_BUTTON_PICDIALOG, OnButtonPicdialog)
 	ON_BN_CLICKED(IDC_BUTTON_PINAO, OnButtonPinao)
 	ON_BN_CLICKED(IDC_2048, On2048)
+	ON_BN_CLICKED(IDC_AUTHOR, OnAuthor)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -113,19 +115,31 @@ HCURSOR CQrsDlg::OnQueryDragIcon()
 
 void CQrsDlg::OnButtonPicdialog() 
 {
+	//AllocConsole();
+	this->ShowWindow( FALSE);
 	SscPic s;
-	s.DoModal();
+	int rs = s.DoModal();
+	this->ShowWindow( TRUE);
 }
 
 void CQrsDlg::OnButtonPinao() 
 {
-	// TODO: Add your control notification handler code here
+	this->ShowWindow( FALSE);
 	SscPinao sp;
 	sp.DoModal();
+	this->ShowWindow( TRUE);
 }
 
 void CQrsDlg::On2048()
 {
+	this->ShowWindow( FALSE);
 	Ssc2048 s;
 	s.DoModal();
+	this->ShowWindow( TRUE);
+}
+
+
+void CQrsDlg::OnAuthor() 
+{
+	AfxMessageBox("苏上程\n14通信工程\n用时:20h");
 }

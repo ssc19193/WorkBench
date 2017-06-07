@@ -39,6 +39,7 @@ protected:
 	afx_msg HCURSOR OnQueryDragIcon();
 	afx_msg void OnButtonPicdialog();
 	afx_msg void OnButtonPinao();
+	afx_msg void OnAuthor();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 private:

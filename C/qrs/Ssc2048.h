@@ -43,7 +43,8 @@ protected:
 	//{{AFX_MSG(Ssc2048)
 	afx_msg void OnPaint();
 	afx_msg void On2048Restart();
-	afx_msg void OnClose();
+	virtual void OnCancel();
+	afx_msg void On2048Help();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 private:

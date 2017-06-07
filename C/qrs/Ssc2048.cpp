@@ -59,7 +59,8 @@ Ssc2048::Ssc2048(CWnd* pParent /*=NULL*/)
 	ins[1][1]=2;
 	ins[2][2]=2;
 	ins[3][3]=2;
-*/	AllocConsole();
+*/
+//	AllocConsole();
 	Restart2048();
 
 	cbbg.CreateSolidBrush( RGB(187,173,160));
@@ -95,7 +96,7 @@ BEGIN_MESSAGE_MAP(Ssc2048, CDialog)
 	//{{AFX_MSG_MAP(Ssc2048)
 	ON_WM_PAINT()
 	ON_BN_CLICKED(ID_2048_RESTART, On2048Restart)
-	ON_WM_CLOSE()
+	ON_BN_CLICKED(ID_2048_HELP, On2048Help)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -188,6 +189,7 @@ BOOL Ssc2048::PreTranslateMessage(MSG* pMsg)
 	// TODO: Add your specialized code here and/or call the base class
 	if (pMsg->message == WM_KEYDOWN && (pMsg->wParam > 36 && pMsg->wParam < 41))  
     {  
+//		cprintf("%d--", pMsg->wParam);
         switch(pMsg->wParam)  
         {  
             case VK_ESCAPE: //Esc按键事件  
@@ -475,11 +477,10 @@ void Ssc2048::Restart2048()
 	}
 }
 
-void Ssc2048::OnClose() 
+void Ssc2048::OnCancel() 
 {
-
 	cbbg.DeleteObject();
-	cb0.DeleteObject();
+	cb0.DeleteObject();	
 	cb2.DeleteObject();
 	cb4.DeleteObject();
 	cb8.DeleteObject();
@@ -492,8 +493,14 @@ void Ssc2048::OnClose()
 	cb1024.DeleteObject();
 	cb2048.DeleteObject();
 	cb4096.DeleteObject();
+	cb4096.DeleteObject();
 	cb = 0;
 	fontGrade.DeleteObject();
 
-	CDialog::OnClose();
+	CDialog::OnCancel();
+}
+
+void Ssc2048::On2048Help() 
+{
+	AfxMessageBox("通过键盘的上下左右箭头控制.");	
 }
