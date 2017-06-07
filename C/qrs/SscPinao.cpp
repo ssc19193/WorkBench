@@ -54,10 +54,11 @@ void SscPinao::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(SscPinao, CDialog)
 	//{{AFX_MSG_MAP(SscPinao)
-	ON_BN_CLICKED(ID_CLOSE, OnClose)
-	ON_BN_CLICKED(ID_START, OnStart)
-	ON_BN_CLICKED(ID_PAUSE, OnPause)
+	ON_BN_CLICKED(ID_PINAO_CLOSE, OnClose)
+	ON_BN_CLICKED(ID_PINAO_START, OnStart)
+	ON_BN_CLICKED(ID_PINAO_PAUSE, OnPause)
 	ON_WM_PAINT()
+	ON_BN_CLICKED(ID_PINAO_HELP, OnPinaoHelp)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -323,7 +324,7 @@ void SscPinao::OnPaint()
 	}
 
 
-    CDialog::OnPaint();
+    //CDialog::OnPaint();
 }
 
 void SscPinao::drawBlock(CDC* memDc, int x, int y )
@@ -336,5 +337,9 @@ void SscPinao::flush()
 	SendMessage( WM_PAINT, 0,0);
 	Invalidate();
 	//UpdateWindow();
-	//ValidateRgn( CRgn
+}
+
+void SscPinao::OnPinaoHelp() 
+{
+	AfxMessageBox("操作提示:\n1.当且仅当黑块变为红色, 方可按下其下方对应的字母(A/S/D/F).\n2.点击开始按钮, 开始游戏.\n3.点击暂停按钮或按下j字母暂停. ");	
 }

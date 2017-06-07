@@ -15,13 +15,11 @@ class CQrsDlg : public CDialog
 {
 // Construction
 public:
-	void showPic();
 	CQrsDlg(CWnd* pParent = NULL);	// standard constructor
 
 // Dialog Data
 	//{{AFX_DATA(CQrsDlg)
-	enum { IDD = IDD_QRS_DIALOG };
-		// NOTE: the ClassWizard will add data members here
+	enum { IDD = IDD_QRS_MAIN };
 	//}}AFX_DATA
 
 	// ClassWizard generated virtual function overrides
@@ -39,11 +37,12 @@ protected:
 	virtual BOOL OnInitDialog();
 	afx_msg void OnPaint();
 	afx_msg HCURSOR OnQueryDragIcon();
-	afx_msg void OnButton1();
 	afx_msg void OnButtonPicdialog();
 	afx_msg void OnButtonPinao();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
+private:
+	void On2048();
 };
 
 //{{AFX_INSERT_LOCATION}}

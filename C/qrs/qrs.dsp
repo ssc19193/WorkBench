@@ -102,6 +102,10 @@ SOURCE=.\qrsDlg.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Ssc2048.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\SscPic.cpp
 # End Source File
 # Begin Source File
@@ -128,6 +132,10 @@ SOURCE=.\qrsDlg.h
 # Begin Source File
 
 SOURCE=.\Resource.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Ssc2048.h
 # End Source File
 # Begin Source File
 

@@ -41,6 +41,7 @@ BEGIN_MESSAGE_MAP(CQrsDlg, CDialog)
 	ON_WM_QUERYDRAGICON()
 	ON_BN_CLICKED(IDC_BUTTON_PICDIALOG, OnButtonPicdialog)
 	ON_BN_CLICKED(IDC_BUTTON_PINAO, OnButtonPinao)
+	ON_BN_CLICKED(IDC_2048, On2048)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -90,33 +91,6 @@ void CQrsDlg::OnPaint()
 		CDialog::OnPaint();
 
 	}
-		showPic();
-}
-
-// The system calls this to obtain the cursor to display while the user drags
-//  the minimized window.
-HCURSOR CQrsDlg::OnQueryDragIcon()
-{
-	return (HCURSOR) m_hIcon;
-}
-
-void CQrsDlg::OnButton1() 
-{
-//showPic();
-	//从资源中加载图片
-	CBitmap bitmap;
-	//加载指定位图资源 Bmp图片ID
-	bitmap.LoadBitmap(IDB_BITMAP_OUCFLAG);  
-	//获取对话框上的句柄 图片控件ID
- 	CStatic *p=(CStatic *)GetDlgItem(IDC_STATIC_pic);  
-	//设置静态控件窗口风格为位图居中显示
-	p->ModifyStyle(0xf,SS_BITMAP|SS_CENTERIMAGE); 
-	//将图片设置到Picture控件上
-	p->SetBitmap(bitmap); 
-}
-
-void CQrsDlg::showPic()
-{
 	//从资源中加载图片
 	CBitmap bitmap;
 	//加载指定位图资源 Bmp图片ID
@@ -127,6 +101,13 @@ void CQrsDlg::showPic()
 	p->ModifyStyle(0xf,SS_BITMAP|SS_CENTERIMAGE); 
 	//将图片设置到Picture控件上
 	p->SetBitmap(bitmap); 
+}
+
+// The system calls this to obtain the cursor to display while the user drags
+//  the minimized window.
+HCURSOR CQrsDlg::OnQueryDragIcon()
+{
+	return (HCURSOR) m_hIcon;
 }
 
 void CQrsDlg::OnButtonPicdialog() 
@@ -140,4 +121,9 @@ void CQrsDlg::OnButtonPinao()
 	// TODO: Add your control notification handler code here
 	SscPinao sp;
 	sp.DoModal();
+}
+
+void CQrsDlg::On2048()
+{
+
 }

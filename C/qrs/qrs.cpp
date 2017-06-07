@@ -5,6 +5,7 @@
 #include "qrs.h"
 #include "qrsDlg.h"
 #include "SscPinao.h"
+#include "Ssc2048.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -60,6 +61,9 @@ BOOL CQrsApp::InitInstance()
 	int nResponse = dlg.DoModal();
 
 //	SscPinao s;
+//	int nResponse = s.DoModal();
+
+//	Ssc2048 s;
 //	int nResponse = s.DoModal();
 
 	if (nResponse == IDOK)

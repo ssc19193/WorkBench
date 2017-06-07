@@ -57,7 +57,7 @@ void SscPic::OnButtonPicNext()
 
 void SscPic::OnButtonPicClose() 
 {
-CDialog:OnOK();	
+	CDialog:OnOK();	
 }
 
 void SscPic::nextPic()

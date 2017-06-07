@@ -48,6 +48,7 @@ protected:
 	virtual BOOL OnInitDialog();
 	afx_msg void OnPause();
 	afx_msg void OnPaint();
+	afx_msg void OnPinaoHelp();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 private:
