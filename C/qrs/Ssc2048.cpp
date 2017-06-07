@@ -48,10 +48,14 @@ Ssc2048::Ssc2048(CWnd* pParent /*=NULL*/)
 	//}}AFX_DATA_INIT
 	for( int i=0; i<4; i++){
 		for( int j=0; j<4; j++){
-			ins[i][j]=0;
+			ins[i][j]= 1<<(4*i+j);
 		}
 	}
 /*	ins[0][0]=2;
+	ins[0][1]=4;
+	ins[0][2]=8;
+	ins[0][3]=0;
+	ins[0][0]=2;
 	ins[1][1]=2;
 	ins[2][2]=2;
 	ins[3][3]=2;
@@ -160,12 +164,19 @@ void Ssc2048::OnPaint()
 			cr.DeleteObject();
 
 			if( ins[i][j] == 0) continue;
-			if( ins[i][j] < 8){
+			dc.SetTextColor( RGB(255,255,255));
+			if( ins[i][j] < 10){
 				dc.SetTextColor(RGB(119,110,93));
-			}else{
-				dc.SetTextColor( RGB(255,255,255));
+				c.left +=15;
+			}else if(ins[i][j] < 128){
+				c.left += 25;
+			}else if( ins[i][j] < 1024){
+				c.left += 15;
+			}else if( ins[i][j] < 16384){
+				c.left += 10;
 			}
 			cs.Format("%2d", ins[i][j]);
+			c.top +=25;
 			dc.DrawText(_T(cs),  &c, DT_EDITCONTROL|DT_WORDBREAK|DT_LEFT|DT_NOPREFIX);
 
 		}

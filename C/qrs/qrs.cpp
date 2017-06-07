@@ -58,15 +58,15 @@ BOOL CQrsApp::InitInstance()
 
 	// 只能选择其中一项
 
-	CQrsDlg dlg;
-	m_pMainWnd = &dlg;
-	int nResponse = dlg.DoModal();
+//	CQrsDlg dlg;
+//	m_pMainWnd = &dlg;
+//	int nResponse = dlg.DoModal();
 
 //	SscPinao s;
 //	int nResponse = s.DoModal();
 
-//	Ssc2048 s;
-//	int nResponse = s.DoModal();
+	Ssc2048 s;
+	int nResponse = s.DoModal();
 
 	if (nResponse == IDOK)
 	{
