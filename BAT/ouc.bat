@@ -1,7 +1,7 @@
 ﻿:: 依次为宽带连接名（默认“宽带连接”），用户名，密码
 @set "connectName=ouc"
-@set "userId=14020023034"
-@set "password=14020023034"
+@set "userId="
+@set "password="
 
 @echo off
 Setlocal enabledelayedexpansion
